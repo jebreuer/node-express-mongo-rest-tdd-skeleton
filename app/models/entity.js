@@ -13,9 +13,9 @@ let EntitySchema = new Schema(
 )
 
 EntitySchema.pre('save', next => {
-  let now = new Date();
+  let now = new Date()
   if (!this.createdAt) {
-    this.createdAt = now;
+    this.createdAt = now
   }
 
   this.updatedAt = now

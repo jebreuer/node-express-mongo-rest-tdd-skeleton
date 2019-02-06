@@ -1,51 +1,50 @@
-let mongoose = require('mongoose');
-let Entity = require('../models/entity');
+let mongoose = require('mongoose')
+let Entity = require('../models/entity')
 
-function getEntities(req, res) {
-  let query = Entity.find({});
+function getEntities (req, res) {
+  let query = Entity.find({})
 
   query.exec((err, entity) => {
-    if (err) res.send(err);
+    if (err) res.send(err)
 
-    res.json(entity);
-  });
+    res.json(entity)
+  })
 }
 
-function postEntity(req, res) {
-  var newEntity = new Entity(req.body);
+function postEntity (req, res) {
+  var newEntity = new Entity(req.body)
 
   newEntity.save((err, entity) => {
     if (err) {
-      res.send(err);
+      res.send(err)
+    } else {
+      res.json({ message: 'Entity successfully added!', entity })
     }
-    else {
-      res.json({ message: "Entity successfully added!", entity });
-    }
-  });
+  })
 }
 
-function getEntity(req, res) {
+function getEntity (req, res) {
   Entity.findById(req.params.id, (err, entity) => {
-    if (err) res.send(err);
+    if (err) res.send(err)
 
-    res.json(entity);
-  });
+    res.json(entity)
+  })
 }
 
-function deleteEntity(req, res) {
+function deleteEntity (req, res) {
   Entity.deleteOne({ _id: req.params.id }, (err, result) => {
-    res.json({ message: "Entity successfully deleted!", result });
-  });
+    res.json({ message: 'Entity successfully deleted!', result })
+  })
 }
 
-function updateEntity(req, res) {
+function updateEntity (req, res) {
   Entity.findById({ _id: req.params.id }, (err, entity) => {
-    if (err) res.send(err);
+    if (err) res.send(err)
     Object.assign(entity, req.body).save((err, entity) => {
-      if (err) res.send(err);
-      res.json({ message: 'Entity updated!', entity });
-    });
-  });
+      if (err) res.send(err)
+      res.json({ message: 'Entity updated!', entity })
+    })
+  })
 }
 
-module.exports = { getEntities, postEntity, getEntity, deleteEntity, updateEntity };
+module.exports = { getEntities, postEntity, getEntity, deleteEntity, updateEntity }
